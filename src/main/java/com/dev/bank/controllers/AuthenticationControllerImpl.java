@@ -13,15 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationControllerImpl implements AuthenticationController {
 
     @Autowired
-    private AuthenticationService service; //null -> NOT TRUE
+    private AuthenticationService service;
 
     @Override
     public AuthLoginResponse login(AuthLoginRequest request) {
+        System.out.println("[AUTH][LOGIN][CONTROLLER] username=" + (request != null ? request.getUsername() : null));
         return service.login(request);
     }
 
     @Override
     public AuthRegisterResponse register(AuthRegisterRequest request) {
-        return null;
+        System.out.println("[AUTH][REGISTER][CONTROLLER] username=" + (request != null ? request.getUsername() : null));
+        return service.register(request);
     }
 }
