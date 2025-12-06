@@ -5,6 +5,8 @@ import com.dev.bank.models.request.AuthRegisterRequest;
 import com.dev.bank.models.response.AuthLoginResponse;
 import com.dev.bank.models.response.AuthRegisterResponse;
 import com.dev.bank.services.client.AuthenticationService;
+import com.dev.bank.services.client.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.regex.Pattern;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+
+    private TokenService token;
 
     private static boolean isBlank(String s) {
         return s == null || s.trim().isEmpty();
@@ -46,8 +50,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         response.setSuccess(true);
         response.setMessage("User has been logged in successfully");
-        response.setToken("demo-token-123");
-
+        response.setToken(token.gen(username));
         System.out.println("[AUTH][LOGIN][SERVICE] ok: " + username);
         return response;
     }
@@ -124,7 +127,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         response.setSuccess(true);
         response.setMessage("User has been registered successfully");
-
+        response.setToken(token.gen(username));
         System.out.println("[AUTH][REGISTER][SERVICE] ok: " + username);
         return response;
     }
